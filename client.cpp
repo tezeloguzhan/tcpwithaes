@@ -31,21 +31,26 @@ class Client{
             if(dogrulama<0)
                 cout<<"baglantı problemi";
             else 
-                cout<<"Baglandi";
+                cout<<"Baglandi\n\n";
         }
 
         void sendMessage(const char *metin){
             
-            int mesaj_yazildi=write(sockfd,metin,200);
+            int mesaj_yazildi = write(sockfd, metin, sizeof(metin));
+            cout<<"log send message lend : " << mesaj_yazildi  << std::endl;
             if(mesaj_yazildi<0)
                 cout<<"MESAJ YAZILAMADI";
+            
+            
+            
         }
 
-        char * receiveMessage(){
-            char metin[200];
-            int mesaj_okundu=read(sockfd,metin,200);
+        char  receiveMessage(){
+            char metin[1024];
+            int mesaj_okundu=read(sockfd,metin,1024);
             if(mesaj_okundu<0)
                 cout<<"MESAJ OKUNAMADI";
+            
             
         }
 
@@ -54,9 +59,14 @@ class Client{
 };
 
 int main(){
-    Client a(8080);
+    
+    Client a(5000);
     a.connection();
     a.sendMessage("Merhaba Ben Oguzhan");
     cout<< a.receiveMessage();
-}
+    
+     
+    
+    }
+
 

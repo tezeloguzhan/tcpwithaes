@@ -17,16 +17,15 @@ class Server{
     public:
         Server(int portnumber){
             port=portnumber;
-            sockfd=socket(AF_INET,SOCK_STREAM,0);
+            sockfd=socket(AF_INET, SOCK_STREAM, 0);
             if(sockfd==-1)
                 cout<<"soket acilmadi";
             else
                 cout<<"soket acildi\n";
             SunucuBilgileri.sin_family=AF_INET;
             SunucuBilgileri.sin_addr.s_addr=htonl(INADDR_ANY);
-            SunucuBilgileri.sin_port=htons(port);
+            SunucuBilgileri.sin_port = htons(port);
             int kontrol=bind(sockfd,(struct sockaddr *)&SunucuBilgileri,sizeof(SunucuBilgileri));
-
             if(kontrol<0)
                 cout<<"IP ADRES KONTROL ET"  ; 
             else
@@ -50,28 +49,33 @@ class Server{
 
         void sendMessage(const char *metin){
             
-            int mesaj_yazildi=write(sockfd,metin,strlen(metin));
+            int mesaj_yazildi=write(sockfd, metin, strlen(metin));
             if(mesaj_yazildi<0)
                 cout<<"MESAJ YAZILAMADI/n";
         }
 
         char * receiveMessage(){
-            char metin[200];
-            int mesaj_okundu=read(sockfd,metin,200);
-            if(mesaj_okundu<0)
-                cout<<"MESAJ OKUNAMADI/n";
-            
+            char metin[1024] = "\n";
+            int mesaj_okundu = read(sockfd, metin, 1024);
+            cout << "server len : " << mesaj_okundu << endl;
+            if(mesaj_okundu < 0){
+               perror("error : "); 
+                cout<<"MESAJ OKUNAMADI\n";
+            }
+            cout<<metin;
+            cout << "log : here " << endl;            
         }
 };
 
 
 
 int main(){
-    Server server(8080);
+    
+    Server server(5000);
     server.Listen();
     string gelenmesaj=server.receiveMessage();
     cout<<gelenmesaj;
     server.sendMessage("Merhaba Ben Sunucu");
-
+    
 
 }
