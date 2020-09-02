@@ -41,11 +41,12 @@ class Client{
                 cout<<"MESAJ YAZILAMADI";
         }
 
-        char receiveMessage(){
+        char * receiveMessage(){
             char metin[200];
             int mesaj_okundu=read(sockfd,metin,200);
             if(mesaj_okundu<0)
                 cout<<"MESAJ OKUNAMADI";
+            
         }
 
 
@@ -53,7 +54,7 @@ class Client{
 };
 
 int main(){
-    Client a(4444);
+    Client a(8080);
     a.connection();
     a.sendMessage("Merhaba Ben Oguzhan");
     cout<< a.receiveMessage();
