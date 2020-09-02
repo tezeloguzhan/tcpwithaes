@@ -8,17 +8,12 @@
 
 using namespace std;
 
-
-
-
-
 class Client{
 
     
     int sockfd;
     int port;
     struct sockaddr_in SunucuBilgileri;
-
     public:
         Client(int portnumber){
             port=portnumber;
@@ -28,7 +23,6 @@ class Client{
             SunucuBilgileri.sin_family=AF_INET;
             SunucuBilgileri.sin_addr.s_addr=htonl(INADDR_ANY);
             SunucuBilgileri.sin_port=htons(port);
-
 
         };
 
