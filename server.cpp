@@ -12,6 +12,7 @@ class Server{
     socklen_t clientlength;
     
     int sockfd;
+    int clifd;
     int port;
     struct sockaddr_in SunucuBilgileri,MusteriBilgileri;
     public:
@@ -38,8 +39,8 @@ class Server{
         void Listen(){
             listen(sockfd,5);
             clientlength=sizeof(MusteriBilgileri);
-            int kabul=accept(sockfd,(struct sockaddr*)&MusteriBilgileri,&clientlength);
-            if(kabul==-1)
+            clifd=accept(sockfd,(struct sockaddr*)&MusteriBilgileri,&clientlength);
+            if(clifd==-1)
                 cout<<"Baglantı Kabul Edilmedi";
             else
                 cout<<"Bağlantı Kabul Edildi\n";
@@ -49,21 +50,21 @@ class Server{
 
         void sendMessage(const char *metin){
             
-            int mesaj_yazildi=write(sockfd, metin, strlen(metin));
+            int mesaj_yazildi=write(clifd, metin, strlen(metin));
             if(mesaj_yazildi<0)
                 cout<<"MESAJ YAZILAMADI/n";
         }
 
         char * receiveMessage(){
             char metin[1024] = "\n";
-            int mesaj_okundu = read(sockfd, metin, 1024);
+            int mesaj_okundu = read(clifd, metin, 1024);
             cout << "server len : " << mesaj_okundu << endl;
             if(mesaj_okundu < 0){
                perror("error : "); 
                 cout<<"MESAJ OKUNAMADI\n";
             }
-            cout<<metin;
-            cout << "log : here " << endl;            
+            cout<<metin<<endl;
+            cout << "log : here \n" << endl;            
         }
 };
 
