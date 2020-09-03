@@ -64,7 +64,7 @@ class Server{
                 cout<<"MESAJ OKUNAMADI\n";
             }
             cout<<metin<<endl;
-            cout << "log : here \n" << endl;            
+                    
         }
 };
 
@@ -74,8 +74,7 @@ int main(){
     
     Server server(5000);
     server.Listen();
-    string gelenmesaj=server.receiveMessage();
-    cout<<gelenmesaj;
+    server.receiveMessage();
     server.sendMessage("Merhaba Ben Sunucu");
     
 

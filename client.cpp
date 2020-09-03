@@ -37,7 +37,7 @@ class Client{
         void sendMessage(const char *metin){
             
             int mesaj_yazildi = write(sockfd, metin, sizeof(metin));
-            cout<<"log send message lend : " << mesaj_yazildi  << std::endl;
+            cout<<"log send message lend : \n" << mesaj_yazildi  << std::endl;
             if(mesaj_yazildi<0)
                 cout<<"MESAJ YAZILAMADI";
             
@@ -45,12 +45,13 @@ class Client{
             
         }
 
-        char  receiveMessage(){
-            char metin[1024];
+        char receiveMessage(){
+            char metin[1024]="\0";
             int mesaj_okundu=read(sockfd,metin,1024);
             if(mesaj_okundu<0)
                 cout<<"MESAJ OKUNAMADI";
             cout<<metin;
+            
             
         }
 
@@ -63,7 +64,8 @@ int main(){
     Client a(5000);
     a.connection();
     a.sendMessage("Hi\n");
-    cout<< a.receiveMessage();
+    a.receiveMessage();
+    
     
      
     
